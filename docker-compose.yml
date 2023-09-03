@@ -1,26 +1,38 @@
 version: '3'
 services:
   # MongoDB service
-  mongodb:
+  mongo:
     image: mongo:latest
     ports:
       - "27017:27017"
+    environment:
+      MANGO_INITDB DATABASE: mongo
+      MONGO_INITDB_ROOT_USERNAME: abi
+      MONGO_INITDB_ROOT_PASSWORD: abi
     volumes:
-      - data-volume:/data/db     
+      -  mongodb-data:/data/db     
+    networks:
+      - app-network
 
   # Express.js server service
   server:
     build: ./server
     ports:
       - "5000:5000"
+    env_file: .env    
     networks:
       - app-network    
     depends_on:
-      - mongodb
-
+       - mongo
+    links:
+       - mongo
+         # environment:
+         #    MONGODB_URI: mongodb://abi:abi:27017/mango
   # React.js client service
   client:
     build: ./client
+      #links:
+      #- mongo
     depends_on:
       - server    
     ports:
@@ -34,5 +46,4 @@ networks:
     app-network:
         driver: bridge
 volumes:
-    data-volume:
-
+  mongodb-data:
