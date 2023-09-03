@@ -1,15 +1,15 @@
-FROM node:14
-RUN mkdir app
+FROM node:18
 
 WORKDIR /app
 
 COPY package*.json ./
+RUN rm -rf node_modules
+RUN npm install -g npm@10.0.0
+RUN npm install
 
-RUN npm i
-RUN npm run start
 COPY . .
 
 EXPOSE 5000
 
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
 

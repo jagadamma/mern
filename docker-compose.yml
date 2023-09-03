@@ -6,11 +6,11 @@ services:
     ports:
       - "27017:27017"
     environment:
-      MANGO_INITDB DATABASE: mongo
+      MONGO_INITDB_DATABASE: mongo  # Corrected the environment variable name
       MONGO_INITDB_ROOT_USERNAME: abi
       MONGO_INITDB_ROOT_PASSWORD: abi
     volumes:
-      -  mongodb-data:/data/db     
+      - mongodb-data:/data/db
     networks:
       - app-network
 
@@ -19,31 +19,27 @@ services:
     build: ./server
     ports:
       - "5000:5000"
-    env_file: .env    
+    env_file: .env
     networks:
-      - app-network    
+      - app-network
     depends_on:
-       - mongo
-    links:
-       - mongo
-         # environment:
-         #    MONGODB_URI: mongodb://abi:abi:27017/mango
+      - mongo
+    # Remove the "links" section, it's not needed
+
   # React.js client service
   client:
     build: ./client
-      #links:
-      #- mongo
     depends_on:
-      - server    
+      - server
     ports:
       - "3000:3000"
     networks:
       - app-network
 
-        
-
 networks:
-    app-network:
-        driver: bridge
+  app-network:
+    driver: bridge
+
 volumes:
   mongodb-data:
+
