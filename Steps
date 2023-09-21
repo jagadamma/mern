@@ -1,0 +1,4 @@
+create a Docker volume to store the uploaded images. This volume will be separate from the container, allowing you to retain data even when the container is recreated.
+          docker volume create image_data.
+docker run -d -p 3000:3000 -v /path/on/host:/app "$DOCKER_IMAGE_NAME
+external storage service like Amazon S3 can be used
