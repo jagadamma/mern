@@ -34,8 +34,10 @@ pipeline {
                   sh 'npm install -g pm2'
                   sh 'npm i'
                   sh 'pm2 start index.js'
+                  sh 'cd'  
+                  sh 'sudo docker-compose up -d'  
                 }
-                sh 'docker-compose up -d
+               
             }
         }
 
