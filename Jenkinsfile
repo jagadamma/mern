@@ -1,14 +1,7 @@
 pipeline {
     agent any
     
-    stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the source code from the GitHub repository
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/jagadamma/mern.git']]])
-            }
-        }
-        
+    stages {    
         stage('Install Dependencies') {
             steps {
                 // Install Node.js and npm
